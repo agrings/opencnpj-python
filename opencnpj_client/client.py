@@ -68,6 +68,7 @@ class OpenCNPJClient:
     
     def _parse_empresa(self, dados: Dict) -> Empresa:
         """Converte dados da API para objeto Empresa"""
+        print(f">>>>>>>{dados}")
         empresa = Empresa(
             cnpj=self._limpar_cnpj(dados.get("cnpj", "")),
             razao_social=dados.get("razao_social"),
