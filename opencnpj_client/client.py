@@ -110,8 +110,8 @@ class OpenCNPJClient:
         )
         
         # Extrair endereço
-        if dados.get("endereco"):
-            empresa.endereco = self._parse_endereco(dados["endereco"])
+        if dados.get("municipio"):
+            empresa.endereco = self._parse_endereco(dados)
         
         # Extrair atividade principal
         if dados.get("cnae_fiscal"):
