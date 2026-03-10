@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "opencnpj-client"
+version = "1.0.0"
+description = "Cliente Python para consulta de CNPJs na API do OpenCNPJ"
+readme = "README.md"
+authors = [
+    {name = "Alexandre Grins", email = "agrings@gmail.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = ["cnpj", "consulta cnpj", "receita federal", "opencnpj", "brasil"]
+requires-python = ">=3.7"
+dependencies = [
+    "requests>=2.25.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=4.0.0"
+]
+
+[project.urls]
+homepage = "https://github.com/agrings/opencnpj-python"
+repository = "https://github.com/agrings/opencnpj-python.git"
+documentation = "https://github.com/agrings/opencnpj-python#readme"
+bugs = "https://github.com/agrings/opencnpj-python/issues"
+
+[project.scripts]
+consulta-cnpj = "opencnpj_client.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["opencnpj_client*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py37', 'py38', 'py39', 'py310', 'py311']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --cov=opencnpj_client --cov-report=html"
+
+[tool.coverage.run]
+source = ["opencnpj_client"]
+omit = ["*/tests/*", "*/test_*.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:"
+]
+

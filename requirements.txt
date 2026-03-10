@@ -1,0 +1,3 @@
+requests>=2.25.0
+pytest>=7.0.0 # para testes
+pytest-cov>=4.0.0 # para cobertura de testes
