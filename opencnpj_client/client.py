@@ -66,9 +66,34 @@ class OpenCNPJClient:
             uf=dados.get("uf")
         )
     
+    def _safe_get_descricao(self, campo: Any) -> Optional[str]:
+        """
+        Extrai com segurança a descrição de um campo que pode ser:
+        - Dicionário com chave 'descricao'
+        - String direta
+        - None
+        """
+        if not campo:
+            return None
+        if isinstance(campo, dict):
+            return campo.get("descricao")
+        if isinstance(campo, str):
+            return campo
+        return str(campo) if campo else None
+    
     def _parse_empresa(self, dados: Dict) -> Empresa:
         """Converte dados da API para objeto Empresa"""
-        print(f">>>>>>>{dados}")
+        
+        # Processar porte com segurança
+        porte = dados.get("porte")
+        if isinstance(porte, dict):
+            porte_descricao = porte.get("descricao")
+        else:
+            porte_descricao = str(porte) if porte else None
+        
+        # Processar natureza jurídica com segurança
+        natureza_juridica = self._safe_get_descricao(dados.get("natureza_juridica"))
+        
         empresa = Empresa(
             cnpj=self._limpar_cnpj(dados.get("cnpj", "")),
             razao_social=dados.get("razao_social"),
@@ -77,8 +102,8 @@ class OpenCNPJClient:
             situacao_cadastral=dados.get("descricao_situacao_cadastral"),
             data_situacao=self._parse_data(dados.get("data_situacao_cadastral")),
             capital_social=dados.get("capital_social"),
-            porte=dados.get("porte", {}).get("descricao") if dados.get("porte") else None,
-            natureza_juridica=dados.get("natureza_juridica", {}).get("descricao") if dados.get("natureza_juridica") else None,
+            porte=porte_descricao,
+            natureza_juridica=natureza_juridica,
             telefone=dados.get("telefone1"),
             email=dados.get("email"),
             dados_brutos=dados

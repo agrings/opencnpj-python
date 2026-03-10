@@ -70,24 +70,39 @@ class Empresa:
     
     @property
     def cnpj_formatado(self) -> str:
+        """Retorna o CNPJ formatado (XX.XXX.XXX/XXXX-XX)"""
         if not self.cnpj or len(self.cnpj) != 14:
             return self.cnpj or "CNPJ não informado"
         return f"{self.cnpj[:2]}.{self.cnpj[2:5]}.{self.cnpj[5:8]}/{self.cnpj[8:12]}-{self.cnpj[12:]}"
     
     @property
     def data_abertura_str(self) -> str:
+        """Retorna a data de abertura formatada"""
         if self.data_abertura:
             return self.data_abertura.strftime("%d/%m/%Y")
         return "Data não disponível"
     
     @property
     def situacao_descricao(self) -> str:
+        """Retorna a situação cadastral com data se disponível"""
         if self.situacao_cadastral and self.data_situacao:
             return f"{self.situacao_cadastral} desde {self.data_situacao.strftime('%d/%m/%Y')}"
         return self.situacao_cadastral or "Situação não disponível"
     
     @property
     def capital_social_formatado(self) -> str:
+        """Retorna o capital social formatado como moeda"""
         if self.capital_social:
             return f"R$ {self.capital_social:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         return "Capital social não disponível"
+    
+    def __post_init__(self):
+        """Validação pós-inicialização"""
+        # Garantir que natureza_juridica seja string
+        if self.natureza_juridica is not None and not isinstance(self.natureza_juridica, str):
+            self.natureza_juridica = str(self.natureza_juridica)
+        
+        # Garantir que porte seja string
+        if self.porte is not None and not isinstance(self.porte, str):
+            self.porte = str(self.porte)
+
