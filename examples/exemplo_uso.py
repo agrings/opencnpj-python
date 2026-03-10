@@ -11,7 +11,7 @@ def exemplo_basico():
     print("-" * 40)
     
     # Consulta direta com função de atalho
-    empresa = consultar_cnpj("12.345.678/0001-90")  # Substitua por um CNPJ válido
+    empresa = consultar_cnpj("43.350.131/0001-01")  # Substitua por um CNPJ válido
     
     if empresa:
         print(f"Razão Social: {empresa.razao_social}")
@@ -33,8 +33,8 @@ def exemplo_avancado():
     
     # Lista de CNPJs para consultar
     cnpjs = [
-        "12.345.678/0001-90",  # Substitua por CNPJs válidos
-        "98.765.432/0001-10",
+        "03.102.452/0001-72",  # Substitua por CNPJs válidos
+        "28.176.667/0002-40",
     ]
     
     for cnpj in cnpjs:
@@ -67,7 +67,7 @@ def exemplo_tratamento_erros():
         print(f"✅ Erro capturado (esperado): {e}")
     
     # Teste com CNPJ não existente
-    empresa = client.consultar("00.000.000/0000-00")
+    empresa = client.consultar("03.102.452/0001-72")
     if empresa is None:
         print("✅ CNPJ não encontrado (tratado corretamente)")
     
@@ -80,7 +80,7 @@ def exemplo_processamento_dados():
     print("-" * 40)
     
     client = OpenCNPJClient()
-    empresa = client.consultar("12.345.678/0001-90")  # Substitua por um CNPJ válido
+    empresa = client.consultar("03.102.452/0001-72")  # Substitua por um CNPJ válido
     
     if empresa:
         # Acessar propriedades calculadas
